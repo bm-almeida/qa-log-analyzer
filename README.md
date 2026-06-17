@@ -32,6 +32,7 @@ It is inspired by environments such as:
 
 ## Project Structure
 
+```
 qa-log-analyzer/
 │
 ├── logs/
@@ -40,25 +41,27 @@ qa-log-analyzer/
 ├── analyzer.py           # Main Python script
 ├── report.txt            # Generated output report
 └── README.md
-
+```
 ---
 
 ## Example Input (log format)
-
+```
 2026-06-17 10:00:01 INFO System started
 2026-06-17 10:01:15 WARNING High memory usage
 2026-06-17 10:02:00 ERROR Database connection lost
-
+```
 ---
 
 ## Example Output
 
 LOG ANALYSIS REPORT
 =====================
-
+```
 INFO: 3
 WARNING: 1
 ERROR: 2
+```
+
 ---
 
 ## How to Run
