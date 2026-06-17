@@ -1,28 +1,49 @@
-info_account = 0
-warning_count = 0
-error_count = 0
+import sys
 
-with open("logs/sample.log", "r") as file:
-    lines = file.readlines()
+def read_logs(file_path):
+    with open(file_path, "r") as file:
+        return file.readlines()
 
-for line in lines:
+import sys
+    
+def analyze_logs(lines):
+    results = {"INFO": 0, "WARNING": 0, "ERROR": 0, "errors": []}
 
-    if "INFO" in line:
-        info_account += 1
+    for line in lines:
+       if "INFO" in line:
+        results["INFO"] += 1
 
-    elif"WARNING" in line:
-        warning_count += 1
+       elif"WARNING" in line:
+        results["WARNING"] += 1
 
-    elif"ERROR" in line:
-        error_count += 1        
+       elif"ERROR" in line:
+        results["ERROR"] += 1
+        results["errors"].append(line.strip())
 
-with open("report.txt", "w") as report:
-
+    return results
+       
+def generate_report(results, output_path="report.txt"):
+   with open(output_path, "w") as report:
     report.write("LOG ANALYSIS REPORT\n")
     report.write("=====================\n\n")
+    report.write(f"INFO: {results['INFO']}\n")
+    report.write(f"WARNING: {results['WARNING']}\n")
+    report.write(f"ERROR: {results['ERROR']}\n\n")
 
-    report.write(f"INFO: {info_account}\n")
-    report.write(f"WARNING: {warning_count}\n")
-    report.write(f"ERROR: {error_count}\n")
+    report.write("ERROR DETAILS:\n")
+    for error in results["errors"]:
+      report.write(f"- {error}\n")
 
-    print("Analysis completed! Check report.txt file for detailed information.")
+def main():
+    # CLI argurment handling
+    file_path = sys.argv[1] if len(sys.argv) > 1 else "logs/sample.log"
+    
+    lines = read_logs(file_path)
+    results = analyze_logs(lines)
+    generate_report(results)
+
+    print(f"Analysis completed for: {file_path}")
+
+    
+if __name__ == "__main__":
+    main()
