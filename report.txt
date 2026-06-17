@@ -1,0 +1,6 @@
+LOG ANALYSIS REPORT
+=====================
+
+INFO: 20
+WARNING: 7
+ERROR: 4
