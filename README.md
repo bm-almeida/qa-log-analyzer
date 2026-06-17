@@ -1,32 +1,35 @@
 # QA Log Analyzer
 
-A simple Python-based log analysis tool designed for QA and debugging workflows. It reads system log files, categorizes events, and generates a structured report highlighting system behavior, warnings, and errors.
+A Python-based QA automation tool for analyzing system logs, generating reports, and validating system behavior.
 
 ---
 
 ## Purpose
 
-This project simulates a real-world QA automation task: analyzing application or system logs to identify issues, monitor system health, and produce actionable reports.
+This project simulates real-world QA automation by processing application/system logs to:
 
-It is inspired by environments such as:
+- Detect issues
+- Monitor system behavior
+- Generate structured reports
+- Validate results using automated tests
 
-- Industrial control systems
-- EV charging infrastructure
-- Backend service monitoring
+Inspired by real environments such as:
+
+- EV charging systems
+- Industrial monitoring systems
+- Backend service logging pipelines
 
 ---
 
 ## Features
 
-- Reads structured log files
-- Counts log levels:
-
-    * **INFO**
-    * **WARNING**
-    * **ERROR**
-- Extracts and lists error events
-- Generates a summary report (`report.txt`)
-- Simple and readable Python implementation
+- Log parsing (INFO / WARNING / ERROR)
+- Error extraction and reporting
+- CLI support for different log files
+- Structured report generation (`report.txt`)
+- JSON output (`report.json`)
+- Execution logging (`app.log`)
+- Automated tests with pytest
 
 ---
 
@@ -36,47 +39,29 @@ It is inspired by environments such as:
 qa-log-analyzer/
 │
 ├── logs/
-│   └── sample.log        # Input log file
+│   └── sample.log
 │
-├── analyzer.py           # Main Python script
-├── report.txt            # Generated output report
+├── analyzer.py
+├── test_analyzer.py
+├── report.txt
+├── report.json
+├── app.log
 └── README.md
-```
----
-
-## Example Input (log format)
-```
-2026-06-17 10:00:01 INFO System started
-2026-06-17 10:01:15 WARNING High memory usage
-2026-06-17 10:02:00 ERROR Database connection lost
-```
----
-
-## Example Output
-
-LOG ANALYSIS REPORT
-=====================
-```
-INFO: 3
-WARNING: 1
-ERROR: 2
 ```
 
 ---
 
 ## How to Run
 
-### 1. Clone the repository
+### Run analysis
+```bash
+python analyzer.py logs/sample.log
+```
 
-```git clone https://github.com/bm-almeida/qa-log-analyzer.git ```
-
-### 2. Navigate into the project
-
-```bash cd qa-log-analyzer ```
-
-### 3. Run the script
-
-```bash python analyzer.py ```
+### Run tests
+```bash
+python -m pytest
+```
 
 ---
 
@@ -84,22 +69,22 @@ ERROR: 2
 
 - Python scripting
 - File handling
-- String parsing
-- Basic data analysis
-- QA mindset (log inspection and defect identification)
+- CLI argument parsing
+- Logging (debugging & traceability)
+- Automated testing (pytest)
+- QA automation mindset
 
 ---
 
 ## Future Improvements
 
-- Add **CLI** arguments (file input selection)
-- Add **JSON** report export
-- Improve log parsing with regex
-- Add severity classification system
-- Convert into automated QA test utility
+- CI/CD integration (GitHub Actions)
+- HTML report generation
+- Advanced regex-based parsing
+- Severity classification system
 
 ---
 
 ## Author
 
-Built as a QA learning project to demonstrate Python scripting and log analysis capabilities.
+QA automation project built to demonstrate Python scripting, testing, and log analysis skills.
