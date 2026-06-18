@@ -13,15 +13,38 @@ def read_logs(file_path):
     with open(file_path, "r") as file:
         return file.readlines()
 
+VALID_LEVELS = {"INFO", "WARNING", "ERROR"}
+
+def extract_level(line):
+    parts = line.split()
+    if not parts:
+        return None 
+    
+# Time stamp format
+    if len(parts) >= 3 and parts[2].upper() in VALID_LEVELS:
+        return parts[2].upper()
+# Simple format
+    if parts[0].upper() in VALID_LEVELS:
+        return parts[0].upper()
+
+    return None
+
 def analyze_logs(lines):
     results = {"INFO": 0, "WARNING": 0, "ERROR": 0, "errors": []}
 
     for line in lines:
-        if "INFO" in line:
+        level = extract_level(line)
+
+        if not level:
+            continue 
+
+        if level == "INFO":
             results["INFO"] += 1
-        elif "WARNING" in line:
+
+        elif level == "WARNING":
             results["WARNING"] += 1
-        elif "ERROR" in line:
+
+        elif level == "ERROR":
             results["ERROR"] += 1
             results["errors"].append(line.strip())
 

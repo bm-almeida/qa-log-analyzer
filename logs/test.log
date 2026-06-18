@@ -1,0 +1,5 @@
+INFO Fallback mode activated (offline cache enabled)
+INFO Recovery successful - database reconnected
+INFO Synchronizing cached transactions
+WARNING Partial data sync delay detected
+ERROR Database failed

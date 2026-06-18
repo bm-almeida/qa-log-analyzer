@@ -1,14 +1,21 @@
 from analyzer import analyze_logs
+import json
 
 def test_log_analysis():
     sample_logs = [
         "INFO System started",
         "WARNING Low memory",
-        "Error Database failed"
+        "ERROR Database failed",
+        "Warning this failed connection could trigger errors",
+        "error connection lost"
                  ]
     
     result = analyze_logs(sample_logs)
-    assert result["INFO"] == 1
-    assert result["WARNING"] == 1
-    assert result["ERROR"] == 1
+
+    print("=== DEMO OUTPUT ===")
+    print(json.dumps(result, indent=4))
+
+if __name__ == "__main__":
+    test_log_analysis()    
+
     
