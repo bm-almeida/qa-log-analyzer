@@ -1,49 +1,48 @@
 # QA Log Analyzer
 
-A Python-based log analysis tool designed to simulate real-world QA and monitoring workflows.
+A Python-based log analysis tool designed to process, validate, and report on production and validation logs. The project is being developed as a learning exercise in software engineering, QA automation, and industrial validation workflows, with a long-term goal of evolving into a solar inverter production validation tool.
 
-The tool reads log files, identifies log levels, extracts error messages, and generates structured reports for troubleshooting and validation.
+## Project Objectives
 
----
-
-## Purpose
-
-This project demonstrates common QA automation and diagnostic tasks such as:
-
-- Log monitoring
-- Error detection
-- System behavior analysis
-- Report generation
-- Data validation
-
-Inspired by real-world environments including:
-
-- EV charging systems
-- Industrial monitoring systems
-- Backend services
-- Embedded and IoT applications
+* Parse and analyze structured log files
+* Generate human-readable and machine-readable reports
+* Detect errors and validation issues efficiently
+* Improve software engineering practices through incremental development
+* Build a foundation for industrial QA and manufacturing validation tools
 
 ---
 
-## Features
+## Current Features
 
-- Supports multiple log formats:
-  - Simple format:
-    ```
-    ERROR Database failed
-    ```
-  - Timestamp format:
-    ```
-    2026-06-18 10:00:00 ERROR Database failed
-    ```
-- Case-insensitive log level detection
-- Counts INFO, WARNING, and ERROR events
-- Extracts ERROR messages for troubleshooting
-- Ignores unsupported or malformed log entries
-- Generates text reports (`report.txt`)
-- Generates JSON reports (`report.json`)
-- Execution logging (`app.log`)
-- Command-line file selection
+### Log Processing
+
+* Reads log files from disk
+* Supports structured log format validation
+* Parses log entries into strongly typed objects
+* Skips malformed log entries safely
+* Handles empty lines and invalid records
+
+### Analysis
+
+* Counts INFO, WARNING, and ERROR entries
+* Calculates total valid log entries
+* Calculates error rate percentage
+* Collects detailed error messages for reporting
+
+### Reporting
+
+* Generates text reports
+* Generates JSON reports
+* Provides summary statistics
+* Includes detailed error information
+
+### Error Handling
+
+* Missing file detection
+* Permission error handling
+* Invalid log format detection
+* Logging of skipped malformed entries
+* Graceful handling of unexpected file access issues
 
 ---
 
@@ -51,138 +50,131 @@ Inspired by real-world environments including:
 
 ```text
 qa-log-analyzer/
-│
+
+├── main.py
+├── analyzer/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── parser.py
+│   ├── reporter.py
+│   └── stats.py
 ├── logs/
-│   └── sample.log
-│
-├── analyzer.py
-├── app.log
-├── report.txt
-├── report.json
-├── README.md
-└── test_analyzer.py
+├── reports/
+└── tests/
 ```
 
 ---
 
-## Supported Log Formats
+## Architecture
 
-### Simple Format
+### LogEntry Model
+
+The application uses a structured data model based on Python dataclasses.
+
+```python
+@dataclass
+class LogEntry:
+    timestamp: str
+    level: str
+    message: str
+```
+
+This provides a cleaner and more maintainable approach compared to processing raw strings throughout the application.
+
+### Processing Pipeline
 
 ```text
-INFO System started
-WARNING Low memory
-ERROR Database failed
+Log File
+    ↓
+read_logs()
+    ↓
+parse_lines()
+    ↓
+LogEntry Objects
+    ↓
+analyze_logs()
+    ↓
+generate_report()
+    ↓
+Text + JSON Reports
 ```
 
-### Timestamp Format
+---
+
+## Development Progress
+
+### Phase 1 – Project Structure
+
+* Completed
+* Log reading
+* Log analysis
+* Report generation
+* Basic metrics
+* Modular architecture
+
+### Phase 2 – LogEntry Model
+
+* Completed
+* Introduced LogEntry dataclass
+* Refactored parser to return structured objects
+* Added regex-based log validation
+* Added malformed log detection
+* Improved maintainability and documentation
+
+### Phase 3 – Robust Error Handling
+
+* In Progress
+* Additional parser protection
+* Report generation safeguards
+* Improved fault tolerance
+
+### Planned Future Phases
+
+#### Statistics Engine
+
+* Warning rate
+* Error trends
+* Frequency analysis
+* Most common errors
+
+#### Solar Inverter Validation
+
+* Fault code recognition
+* Fault categorization
+* Validation rules
+* PASS / FAIL evaluation
+
+#### Production QA Features
+
+* Batch log processing
+* Yield calculations
+* CSV exports
+* Validation dashboards
+
+---
+
+## Example Log Format
 
 ```text
-2026-06-18 10:00:00 INFO System started
-2026-06-18 10:05:00 WARNING Low memory
-2026-06-18 10:10:00 ERROR Database failed
+2026-06-25 14:35:10,123 - INFO - System startup complete
+2026-06-25 14:35:15,456 - WARNING - Temperature approaching threshold
+2026-06-25 14:35:18,789 - ERROR - Communication timeout detected
 ```
 
 ---
 
-## How to Run
-
-### Analyze the default sample log
+## Running the Application
 
 ```bash
-python analyzer.py
+python main.py logs/sample.log
 ```
 
-### Analyze a specific log file
-
-```bash
-python analyzer.py logs/sample.log
-```
+If no file is provided, the application will use the default sample log.
 
 ---
 
-## Generated Files
+## Project Goals
 
-### report.txt
+This project is intentionally being developed in incremental phases to simulate a real-world software engineering workflow. The focus is not only on functionality but also on maintainability, architecture, testing, error handling, and long-term scalability.
 
-Human-readable summary report containing:
-
-- INFO count
-- WARNING count
-- ERROR count
-- Error details
-
-### report.json
-
-Machine-readable JSON output:
-
-```json
-{
-    "INFO": 10,
-    "WARNING": 3,
-    "ERROR": 2,
-    "errors": [
-        "ERROR Database failed",
-        "ERROR Connection timeout"
-    ]
-}
-```
-
-### app.log
-
-Execution log generated by Python's logging module.
-
----
-
-## Example Output
-
-```json
-{
-    "INFO": 1,
-    "WARNING": 1,
-    "ERROR": 1,
-    "errors": [
-        "ERROR Database failed"
-    ]
-}
-```
-
----
-
-## Skills Demonstrated
-
-- Python scripting
-- File handling
-- Log parsing
-- Data processing
-- JSON generation
-- Logging and traceability
-- Command-line applications
-- QA automation concepts
-- Error analysis and reporting
-
----
-
-## Current Limitations
-
-- Supports INFO, WARNING, and ERROR levels only
-- Assumes supported log formats
-- Does not currently provide real-time log monitoring
-
----
-
-## Future Improvements
-
-- Add DEBUG and CRITICAL support
-- Automated testing with pytest
-- HTML report generation
-- GitHub Actions CI pipeline
-- Real-time log monitoring
-- Advanced parsing and filtering options
-- Report statistics and trend analysis
-
----
-
-## Author
-
-Personal QA automation project focused on Python development, log analysis, and software quality engineering practices.
+Future versions will target industrial validation use cases, particularly for solar inverter production and quality assurance environments.
