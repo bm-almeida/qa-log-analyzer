@@ -1,1 +1,0 @@
-{"INFO": 20, "WARNING": 7, "ERROR": 4, "errors": ["2026-06-17 10:02:00 ERROR Database connection lost", "2026-06-17 10:02:30 ERROR Service timeout during retry cycle", "2026-06-17 10:04:00 ERROR Service timeout on analytics module", "2026-06-17 10:06:00 ERROR Overcurrent protection triggered"]}

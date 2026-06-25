@@ -1,5 +1,8 @@
+__pycache__/
+*.pyc
+
+app.log
 report.txt
 report.json
-app.log
-__pycache__/
+
 .pytest_cache/
