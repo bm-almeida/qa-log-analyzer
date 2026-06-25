@@ -30,8 +30,16 @@ def analyze_logs(entries):
         if results["TOTAL"] > 0
         else 0
     )        
+    
+    # Industrial metrics: Calculate warning rates for preventative maintenance alerts
+    warning_rate = (
+        (results["WARNING"] / results["TOTAL"] * 100)
+        if results["TOTAL"] > 0
+        else 0
+    )
 
     # Round off decimal points for clean report metrics
     results["ERROR_RATE"] = round(error_rate, 2)
+    results["WARNING_RATE"] = round(warning_rate, 2)
 
     return results

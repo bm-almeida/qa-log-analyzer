@@ -17,6 +17,7 @@ def generate_report(results, output_path="reports/report.txt"):
             report.write(f"WARNING: {results['WARNING']}\n")
             report.write(f"ERROR: {results['ERROR']}\n")
             report.write(f"ERROR RATE: {results['ERROR_RATE']}%\n\n")
+            report.write(f"WARNING RATE: {results['WARNING_RATE']}%\n\n")
 
             report.write("ERROR DETAILS:\n")
 
@@ -31,6 +32,9 @@ def generate_report(results, output_path="reports/report.txt"):
             "INFO": results["INFO"],
             "WARNING": results["WARNING"],
             "ERROR": results["ERROR"],
+            "TOTAL": results["TOTAL"],
+            "ERROR_RATE": results["ERROR_RATE"],
+            "WARNING_RATE": results["WARNING_RATE"],
             "errors": results["errors"]
         }
 
